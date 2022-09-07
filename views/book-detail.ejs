@@ -1,0 +1,87 @@
+<div class="book-detail-cont popup center">
+  <div class="book-d-cont">
+    
+    <div class="back center" onclick="closeBookPopup()"> <i class="fa fa-times"> </i></div>
+    <div class="book-detail"></div>
+    <% if(user){ %>
+      <div id="addreview-cont">
+        <div id="addreview-btn" class="center book-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"
+            class="r-jwli3a r-4qtqp9 r-yyyyoo r-1472mwg r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-lrsllp">
+            <g>
+              <path
+                d="M8.8 7.2H5.6V3.9c0-.4-.3-.8-.8-.8s-.7.4-.7.8v3.3H.8c-.4 0-.8.3-.8.8s.3.8.8.8h3.3v3.3c0 .4.3.8.8.8s.8-.3.8-.8V8.7H9c.4 0 .8-.3.8-.8s-.5-.7-1-.7zm15-4.9v-.1h-.1c-.1 0-9.2 1.2-14.4 11.7-3.8 7.6-3.6 9.9-3.3 9.9.3.1 3.4-6.5 6.7-9.2 5.2-1.1 6.6-3.6 6.6-3.6s-1.5.2-2.1.2c-.8 0-1.4-.2-1.7-.3 1.3-1.2 2.4-1.5 3.5-1.7.9-.2 1.8-.4 3-1.2 2.2-1.6 1.9-5.5 1.8-5.7z">
+              </path>
+            </g>
+          </svg>
+        </div>
+        <div id="addreview-formcont">
+          <form id="review-form" class="center">
+            <textarea name="reviewText" id="id_review" cols="30" rows="2"></textarea>
+            <button type="submit"><i class="fa fa-paper-plane"></i></button>
+          </form>
+        </div>
+      </div>
+      <% } %>
+  </div>
+ 
+  
+ 
+  
+ 
+</div>
+<% if(user){ %>
+<script>
+  // add reviews 
+const addreviewBtn = document.getElementById('addreview-btn'),
+addreviewCont =document.getElementById('addreview-cont');
+addreviewBtn.addEventListener('click', (e) => {
+  if(addreviewBtn.querySelector('i')) {
+    addreviewCont.classList.remove('show')
+    addreviewBtn.innerHTML= `<svg viewBox="0 0 24 24" aria-hidden="true" class="r-jwli3a r-4qtqp9 r-yyyyoo r-1472mwg r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-lrsllp"><g><path d="M8.8 7.2H5.6V3.9c0-.4-.3-.8-.8-.8s-.7.4-.7.8v3.3H.8c-.4 0-.8.3-.8.8s.3.8.8.8h3.3v3.3c0 .4.3.8.8.8s.8-.3.8-.8V8.7H9c.4 0 .8-.3.8-.8s-.5-.7-1-.7zm15-4.9v-.1h-.1c-.1 0-9.2 1.2-14.4 11.7-3.8 7.6-3.6 9.9-3.3 9.9.3.1 3.4-6.5 6.7-9.2 5.2-1.1 6.6-3.6 6.6-3.6s-1.5.2-2.1.2c-.8 0-1.4-.2-1.7-.3 1.3-1.2 2.4-1.5 3.5-1.7.9-.2 1.8-.4 3-1.2 2.2-1.6 1.9-5.5 1.8-5.7z"></path></g></svg>`
+  } else {
+    addreviewCont.classList.add('show')
+    addreviewBtn.innerHTML= `<i class="fa fa-times"></i>`
+  }
+})
+  $(document).ready(function () {
+    $("#review-form").submit(function (e) {
+      e.preventDefault()
+      
+      const bookId= $(this)[0].dataset.formId;
+      $.ajax({
+        type: "POST",
+        url: "book/add-review/"+bookId,
+        data: $(this).serialize(),
+        success: function (json) {
+          const {type,review} = json.responce
+          
+          if (type == "success") {
+            const reviewDiv= document.createElement('div')
+            reviewDiv.innerHTML= `<div id="share">
+            <div class="center">
+                <div class="s-img center">
+                <i class="fa fa-user"></i>
+              </div>
+              <div>
+                <h5>${review.user.username}</h5>
+                <p class="s-p">Posting</p>
+              </div>
+            </div>
+            <div id="description">${review.review}</div>
+        
+        </div>`
+          document.getElementById('reviews').appendChild(reviewDiv)
+          addreviewCont.classList.remove('show')
+          addreviewBtn.innerHTML= `<svg viewBox="0 0 24 24" aria-hidden="true" class="r-jwli3a r-4qtqp9 r-yyyyoo r-1472mwg r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-lrsllp"><g><path d="M8.8 7.2H5.6V3.9c0-.4-.3-.8-.8-.8s-.7.4-.7.8v3.3H.8c-.4 0-.8.3-.8.8s.3.8.8.8h3.3v3.3c0 .4.3.8.8.8s.8-.3.8-.8V8.7H9c.4 0 .8-.3.8-.8s-.5-.7-1-.7zm15-4.9v-.1h-.1c-.1 0-9.2 1.2-14.4 11.7-3.8 7.6-3.6 9.9-3.3 9.9.3.1 3.4-6.5 6.7-9.2 5.2-1.1 6.6-3.6 6.6-3.6s-1.5.2-2.1.2c-.8 0-1.4-.2-1.7-.3 1.3-1.2 2.4-1.5 3.5-1.7.9-.2 1.8-.4 3-1.2 2.2-1.6 1.9-5.5 1.8-5.7z"></path></g></svg>`
+          }
+          document.getElementById('id_review').value=""
+        },
+        error: function (err) {
+          
+        },
+      });
+    })
+  })
+</script>
+<% } %>

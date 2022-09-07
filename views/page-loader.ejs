@@ -1,0 +1,42 @@
+<div class="page-loader">
+    <img src="/src/book.gif" alt="Loding...">
+  </div>
+  <style>
+    .page-loader {
+        position: fixed;
+        top:0;
+        left:0;
+        z-index: 12200;
+        width: 100vw;
+        height: 100vh;
+        background: inherit;
+        display: grid;
+        place-items: center;
+        place-content: center;
+        background-color: var(--camel);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ecc979' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+        transition: 0.3s ease;
+      }
+      
+   .page-loader img {
+    width: 250px;
+   }
+   .page-loader.fade-out {
+      animation: fade-out 1s linear forwards;
+      }
+     
+      @keyframes fade-out {
+        100% {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+  </style>
+  <script>
+    const loaderPage = document.querySelector('.page-loader');
+  
+     window.addEventListener('load', (e) => {
+      loaderPage.classList.add('fade-out')
+    }) 
+    
+  </script>

@@ -1,0 +1,33 @@
+<div class="page-head">
+  <h2>Saved</h2>
+</div>
+<section id="myBooks">
+ 
+  <div class="grid">
+    <% books.forEach((book) => {%>
+    <div class="book-box" data-book-id="<%= book.id %>">
+     
+        <div class="book-head flex-e">
+          <form class="saveBook" action="/user/save/<%= book.id %>" method="post">
+            <button type="submit">
+              <% if(user.saved.includes(book._id)){ %>
+              <i class="fa fa-bookmark"></i>
+              <% } else { %>
+              <i class="far fa-bookmark"></i>
+              <% } %>
+            </button>
+          </form>
+        </div>
+      
+      <div class="book-cover">
+        <i class="fa fa-expand book-i"></i>
+        <img src="<%= book.coverImage %>" />
+      </div>
+      <div class="content">
+        <h3><%= book.title %></h3>
+        <p><%= book.auther %></p>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</section>

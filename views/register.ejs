@@ -1,0 +1,95 @@
+
+<div class="loader" id="loade-animation">
+
+  <div class="circle">
+    <div class="dot" style="--l:0"></div>
+    <div class="dot" style="--l:1"></div>
+    <div class="dot" style="--l:2"></div>
+    <div class="dot" style="--l:3"></div>
+    <div class="dot" style="--l:4"></div>
+    <div class="dot" style="--l:5"></div>
+    <div class="dot" style="--l:6"></div>
+    <div class="dot" style="--l:7"></div>
+  </div>
+  <div class="alert">
+    <p> </p>
+    <div class="btn">ok</div>
+  </div>
+
+</div>
+<div class="user-acount">
+  <div class="close" onclick="hideRegisterSide()">
+    <i class="fa fa-times"></i>
+  </div>
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="login flip-card-front">
+        <h1>login</h1>
+        <div class="form">
+          <form id="loginForm" action="/user/login" method="POST">
+            <div class="form-control">
+              <label for="id_email"> email :</label>
+              <input type="email" name="email" autofocus="" autocomplete="off" maxlength="150" required=""
+                id="id_email" />
+            </div>
+            <div class="form-control">
+              <label for="id_password"> password :</label>
+              <div class="pr">
+                <input type="password" name="password" required="" id="id_password" />
+                <i class="fa fa-eye eye right" onclick="seepassWord(this)"></i>
+              </div>
+            </div>
+            <button type="submit" class="btn B">login</button>
+          </form>
+          <p>
+            New to Site?
+            <span onclick="flipcard(1)">Create an account.</span>
+          </p>
+        </div>
+      </div>
+      <div class="sing-up flip-card-back">
+        <h1>Sing up</h1>
+        <div class="form">
+          <form id="singUPForm" method="POST" action="/user/sing-up">
+            <div class="form-control">
+              <label for="id_username"> username :</label>
+              <input type="text" name="username" autofocus="" autocomplete="off" maxlength="150" required=""
+                id="id_username" />
+            </div>
+            <div class="form-control">
+              <label for="id_sing-email"> Email :</label>
+              <input type="email" name="email" required="" autocomplete="off" id="id_sing-email" />
+            </div>
+            <div class="form-control">
+              <label for="id_sing-password"> password :</label>
+              <div class="pr">
+                <input type="password" name="password" required="" id="id_sing-password" />
+                <i class="fa fa-eye eye right" onclick="seepassWord(this)"></i>
+              </div>
+            </div>
+            <button type="submit" class="btn B">sing up</button>
+          </form>
+
+          <p>
+            Already have an account?
+            <span onclick="flipcard(0)"> Sign in → </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  $(document).on("submit", "#loginForm", function (e) {
+    e.preventDefault()
+    submitForm($(this), refrech)
+  })
+  $(document).on("submit", "#singUPForm", function (e) {
+    e.preventDefault()
+    submitForm($(this), refrech)
+  })
+
+</script>

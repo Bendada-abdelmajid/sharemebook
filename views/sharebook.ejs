@@ -1,0 +1,55 @@
+<div class="share-book-cont popup center" id="shareBookForm">
+<div class="share-book">
+  <div class="back center" id="closeShareBookForm"> <i class="fa fa-times"> </i></div>
+    <h2 class="head">Share Book</h2>
+   <div class="form">
+    
+    
+    <form method="POST" id="bookForm" action="/book/new" enctype="multipart/form-data" >
+      
+       <div class="grid"> 
+         <div class="form-control">
+        <label > title :</label>
+        <input type="text" name="title"  autocomplete="off" maxlength="150" required=""
+          id="id_title" />
+      </div>
+      <div class="form-control">
+        <label> auther :</label>
+        <input type="text" name="auther"  autocomplete="off" maxlength="150" required=""
+          id="id_auther" />
+      </div>
+    
+    <div class="form-control">
+      <label> Genre :</label>
+      <select name="genre" id="id_genre">
+        <% allgenres.forEach(gen => { %>
+          <option label="<%= gen.title %>"  value="<%= gen.id %>">
+           
+          </option>
+          <% }) %>
+      </select>
+      
+    </div>
+    <div class="form-control" >
+      <label for="id_des"> discription :</label>
+      <textarea name="description" id="id_des"  cols="6" rows="6"></textarea>
+    </div>
+   
+      <div class="image-box form-control center" >
+        <div id="coverImage" onclick="clickCover(this)" class="image-previw">
+          <i class="fa fa-cloud-upload-alt"></i>
+          <p>upload book cover</p>
+        </div>
+      
+        
+        <input  type="file" accept="image/*" name="coverImage" onchange="changeCover(this)"  id="id_coverImage"  style="display: none;"/>
+      
+      
+        
+      </div>
+    </div>
+      <button type="submit" class="btn B">share book</button>
+    </form>
+   </div>
+  </div>
+</div>

@@ -1,5 +1,26 @@
-<div class="header pad">
-  <!--Search Bar-->
+
+<div class="filters page-head">
+  <div class="splide" id="filtersSlide" aria-label="Placeholder Example">
+    <div class="splide__track">
+      <ul class="splide__list">
+        <li class="splide__slide filter-btn" data-id="all">
+        <form  action="/explore">
+          <input type="hidden" name="g" value="all">
+         <button type="submit">All</buuton> 
+        </form>
+      </li>
+        <% genres.forEach((genre) => {%>
+          <li class="splide__slide filter-btn" data-id="<%= genre.title %>">
+          <form   action="/explore">
+            <input type="hidden" name="g" value="<%= genre.title %>">
+           <button type="submit"><%= genre.title %></buuton> 
+          </form>
+        </li>
+        
+        <% }) %>
+      </ul>
+    </div>
+  </div>
   <form  class="input-box" action="/explore">
     <input  class="search-input" name="q"  placeholder="Search your Pokemon" />
     <button type="submit" class="input-button" >
@@ -7,35 +28,14 @@
     </button>
 
   </form>
- 
-    
-
-
-    <% if(user){ %>
-    <div class="center" onclick="showAcount()" id="userImage--header">
-      <% if(user.userImage){ %>
-      <img src="<%= user.userImage %>" alt="">
-      <% } else { %>
-      <img src="src/reading.png" alt="">
-      <% } %>
-
-    </div>
-
-    <% } else {%>
-    <div class="user-icon center" id="loginBtn" onclick="showRegisterSide(this)">
-      <i class="fa fa-user"></i>
-    </div>
-
-    <% } %>
-  </div>
-
-<div class=" splide" id="newBook-list" aria-label="Placeholder Example">
-  <div class="splide__track">
-    <ul class="splide__list">
-
-      <% newBooks.forEach((book) => {%>
+</div>
+<section id="books-list">
    
-        <li  class="splide__slide book-box" data-book-id="<%=book._id%>" >
+    
+   
+      <div class="grid ">
+        <% books.forEach((book) => {%>
+        <div class="book-box" data-book-id="<%=book._id%>" >
           <div class="book-head space-b">
             <div class="info center" data-user-id="<%=book.user._id%>">
               <div class="s-img center">
@@ -69,33 +69,17 @@
             <h3><%= book.title %></h3>
             <p><%= book.auther %></p>
           </div>
-        
-        
-      </li>
-      <% }) %>
-    </ul>
-  </div>
-</div>
-<div class="best-user pad">
-  <h2>Top BookWorms</h2>
-  <div class="grid-2">
-    <% Topusers.forEach((user) => {%>
-      
-      <div class="user" onclick="showRandomAcount('<%= user.id %>')" >
-        
-          <div class="user-img">
-            <img src="<%= user.usimage %>" alt="">
-          </div>
-          
-        
-        <div class="BooksCount center">
-          <h5 class="center"><%= user.username %></h5>
-          <h5 class="center" ><%= user.userBooks %> Books</h5>
         </div>
+  
+        <% }) %>
       </div>
-      <% }) %>
-  </div>
-</div>
+  
+    </section>
+  <script src="js/slide.js" type="module"></script>
+  <script>
+    const activeFilter = document.location.search.replace('?g=','').replace('+', " ")
+    if(activeFilter.length > 1) {
+      document.querySelector(`.filter-btn[data-id="${activeFilter}"]`).classList.add('active') 
+    }
 
-
-<script src="js/homeslide.js" type="module"></script>
+  </script>

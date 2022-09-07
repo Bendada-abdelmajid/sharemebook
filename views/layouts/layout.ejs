@@ -1,19 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>e-book</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>share me a book</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.0.17/css/splide-core.min.css" integrity="sha512-sSH56LW/WydgZhLwaC633Xapzlktadsoj0oeHNU2r/Nxg1pnMYFwZpRbJWvD1y5wkug7zAl9UmwTxOrzXLaCVA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.0.17/js/splide.min.js" integrity="sha512-RYS55IMzyuLAo0U5iW6X88HjwzQjpd8tytnL+KdfMDVVo8QtsLboBbat8oglcZibVzlsvC+Co2KLSSX+9vOwTg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="/js/jquery-3.6.0.min.js"></script>
+
+
+ 
 </head>
-<body>
-    <h1>header</h1>
-    <br>
-    <br>
-    <%- body %>
-    <br>
-    <br>
-    <br>
-    <h3>footer</h3>
+
+<body dir="ltr">
+  <%- include('../page-loader.ejs') %>
+
+  <div class="body-container">
+    <div class="side-bar space-b">
+      <div class="nav-links">
+        <a href="/" class="logo center">
+          <img src="/src/logo.png" alt="" />
+
+          <h1 class="none"><span>me</span> BooK</h1>
+        </a>
+        <% if(user){%>
+        <div class="nav-link center share-btn" id="shareBtn">
+          <h4 class="none">
+            Share <br />
+            new book
+          </h4>
+          <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-share"
+            viewBox="0 0 16 16">
+            <path
+              d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
+          </svg>
+        </div>
+        <%}%>
+
+          <a href="/" id="/" class="nav-link center"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              fill="currentColor"
+              class="bi bi-house"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"
+              />
+            </svg>
+            <h4 class="none">home</h4></a
+          >
+          <a href="/explore" id="/explore" class="nav-link center"
+            ><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+            <h4 class="none">Explore</h4></a
+          >
+          <div
+            class="nav-link center users-link"
+            onclick="showRegisterSide(this, 'users')"
+          >
+          <img width="22" src="/src/bookwormdarck.png">
+          <img width="30" src="/src/bookworm.png">
+          
+            <h4 class="none">Bookworms</h4>
+          </div>
+
+          <% if(user){%>
+        <a href="/myBooks" id="/myBooks" class="nav-link center"><svg xmlns="http://www.w3.org/2000/svg" width="22"
+            height="22" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+            <path
+              d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+            <path
+              d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+            <path
+              d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+          </svg>
+          <h4 class="none">My Books</h4>
+        </a>
+        <a href="/saved" id="/saved" class="nav-link center"><svg xmlns="http://www.w3.org/2000/svg" width="22"
+            height="22" fill="currentColor" class="bi bi-bookmarks" viewBox="0 0 16 16">
+            <path
+              d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z" />
+            <path
+              d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z" />
+          </svg>
+          <h4 class="none">saved</h4>
+        </a>
+        <%}%>
+        </div>
+
+        <% if(user){%>
+        <div class="nav-footer">
+          <a href="/settings" id="/settings" class="nav-link center"><svg xmlns="http://www.w3.org/2000/svg" width="22"
+              height="22" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+              <path
+                d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+              <path
+                d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
+            </svg>
+            <h4 class="none">Setting</h4>
+          </a>
+          <a class="nav-link center"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+              class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+              <path fill-rule="evenodd"
+                d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+            </svg>
+            <h4 class="none">logout</h4>
+          </a>
+        </div>
+        <%} else {%>
+        <div class="nav-login" onclick="showRegisterSide(this)">
+          <div class="icon center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+              class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+              <path fill-rule="evenodd"
+                d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+            </svg>
+          </div>
+          <h3 class="none">
+            The right choice to share your favorite books and descover a new
+            types
+          </h3>
+          <div class="btn none">Login</div>
+        </div>
+        <%}%>
+      </div>
+
+      <div class="page-container">
+        <header class="space-b ">
+          <!--Search Bar-->
+          <a href="/explore" class="logo center">
+            <img src="/src/logo.png" alt="" />
+  
+            <h1 class="none"><span>me</span> BooK</h1>
+          </a>
+         
+            
+        
+        
+            <% if(user){ %>
+              <div class="user-model-cont">
+                <div class="center"  id="userImage--header" onclick="showUserModel()">
+                  <% if(user.userImage){ %>
+                  <img src="<%= user.userImage %>" alt="">
+                  <% } else { %>
+                  <img src="src/reading.png" alt="">
+                  <% } %>
+                </div>
+                <div class="user-model">
+                  <a href="/settings" id="/settings" class="nav-link center"><svg xmlns="http://www.w3.org/2000/svg" width="22"
+                    height="22" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                    <path
+                      d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+                    <path
+                      d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
+                  </svg>
+                  <h4 >Setting</h4>
+                </a>
+                <a class="nav-link center"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                    class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                      d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                    <path fill-rule="evenodd"
+                      d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                  </svg>
+                  <h4 =>logout</h4>
+                </a>
+                </div>
+              </div>
+            
+        
+            <% } else {%>
+            <div class="user-icon center" id="loginBtn" onclick="showRegisterSide(this)">
+              <i class="fa fa-user"></i>
+            </div>
+        
+            <% } %>
+          </header>
+        <% if(user) { %>
+        <div class="loader" id="loade-animation">
+          <div class="circle">
+            <div class="dot" style="--l: 0"></div>
+            <div class="dot" style="--l: 1"></div>
+            <div class="dot" style="--l: 2"></div>
+            <div class="dot" style="--l: 3"></div>
+            <div class="dot" style="--l: 4"></div>
+            <div class="dot" style="--l: 5"></div>
+            <div class="dot" style="--l: 6"></div>
+            <div class="dot" style="--l: 7"></div>
+          </div>
+          <div class="alert">
+            <p></p>
+            <div class="btn B">ok</div>
+          </div>
+        </div>
+        <%}%> <%- body %>
+      </div>
+      <div class="right-side">
+
+        <% if(!user){ %> 
+          <%- include('../register.ejs') %> 
+        <%}%>
+        <%- include('../usersList.ejs') %>
+
+      </div>
+    </div>
+    <% if(user) {%>}
+    <%- include('../sharebook.ejs') %>
+    <% } %>
+    <%- include('../book-detail.ejs') %> 
+    <%- include('../randomacount.ejs') %>
+    <script src="js/main.js"></script>
+
+    <% if(user) { %>
+    <script>
+      const saveBtns = document.querySelectorAll("form.saveBook");
+      saveBtns.forEach((el) => {
+        el.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          $.ajax({
+            type: "POST",
+            url: e.target.action,
+
+            success: function (json) {
+              const {
+                type,
+                save
+              } = json.responce;
+              const icon = e.target.querySelector("i");
+              
+              icon.classList.replace(icon.classList[0], save);
+              if (document.location.pathname === "/saved") {
+                
+                el.parentElement.parentElement.remove();
+              }
+              
+            },
+            error: function (err) {
+              
+            },
+          });
+        });
+      });
+    </script>
+    <script src="js/acount.js"></script>
+    <% } %>
+    <script>
+      const usrrSearch_btn = document.querySelector("#user-search-button");
+      const usrrSearch_btnIcon = document.querySelector("#user-search-button i");
+      const users = document.querySelectorAll("#users-list .user");
+      usrrSearch_btn.addEventListener("click", (e) => {
+        if (usrrSearch_btnIcon.classList.contains("fa-times")) {
+          document.querySelector("#userSearch-input").value = "";
+          usrrSearch_btnIcon.classList.replace("fa-times", "fa-search");
+          users.forEach((el) => {
+            el.classList.remove("hide");
+          });
+        }
+      });
+
+      async function showUserResults(val) {
+        usrrSearch_btnIcon.classList.replace("fa-search", "fa-times");
+        if (val == "") {
+          usrrSearch_btnIcon.classList.replace("fa-times", "fa-search");
+          users.forEach((el) => {
+            el.classList.remove("hide");
+          });
+        } else {
+          usrrSearch_btnIcon.classList.replace("fa-search", "fa-times");
+          users.forEach((el) => {
+            if (
+              el
+              .querySelector(".user-name")
+              .innerText.toLowerCase()
+              .startsWith(val.toLowerCase())
+            ) {
+              el.classList.remove("hide");
+            } else {
+              el.classList.add("hide");
+            }
+          });
+        }
+      }
+    </script>
 </body>
+
 </html>
