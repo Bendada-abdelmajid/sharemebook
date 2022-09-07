@@ -1,5 +1,8 @@
 const cloudinary = require('cloudinary')
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+  }
+  
 cloudinary.config({
     cloud_name : 'bencod',
     api_key : process.env.api_key,
