@@ -21,7 +21,7 @@ router.get("/:username", async (req, res) => {
     isautincat = true;
 
   }
-  
+  console.log(isautincat)
   userbooks = await Book.find({user:user[0].id}).populate('user').exec();
   res.render("acount.ejs", {
     ues:user[0],
@@ -120,7 +120,7 @@ router.put("/edit/:id", multerConfig.single("userImage"), async (req, res) => {
           await cloudinary.uploader.destroy(user.cloud_id)
         }
           const result = await cloud.uploads(req.file.path)
-          
+          console.log(result)
           user.userImage= result.url
         user.cloud_id=result.id
       }
@@ -129,7 +129,7 @@ router.put("/edit/:id", multerConfig.single("userImage"), async (req, res) => {
       data.type = "success";
       data.user = user;
     } catch (error) {
-      
+      console.log(error)
       data.alert = `<i class="fa fa-exclamation-triangle"></i> somting Wrong plees try again`;
       data.type = "error";
     }

@@ -38,7 +38,7 @@ mongoose.connect(process.env.DATABASE_URL, {
 })
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
-db.once("open", () => 
+db.once("open", () => console.log("Connected to Mongoose"));
 
 
 const store= new mongoDBSission ({

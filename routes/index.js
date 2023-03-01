@@ -5,7 +5,7 @@ const Book = require("../models/book");
 const Genre = require("../models/genre");
 
 router.get("/", async (req, res) => {
-  
+  console.log(req.session)
 
   const allBooks= await Book.find({}).populate("user").populate("genre").exec();
   let books =[]
@@ -23,16 +23,16 @@ router.get("/", async (req, res) => {
       
   } else if(req.query.genre) {
     genre= req.query.genre;
-    
+    console.log(req.query.genre)
     const g = await Genre.find({title:req.query.genre})
-    
+    console.log(g)
     books = await Book.find({genre:g})
     .populate("user")
     .exec();
  
   } else if(req.query.auther) {
     auther= req.query.auther;
-    
+    console.log(req.query.auther)
     books = await Book.find({auther:req.query.auther})
     .populate("user")
     .exec();
