@@ -34,8 +34,9 @@
   </button>
   <% } %>
 </nav>
-
+<% if(users.length > 0){%>
 <div class="users-list">
+
   <% users.forEach((u) => { %>
   <a class="user-card f-start" href="/user/<%=u.username%>">
     <div class="user-img center"  >
@@ -74,9 +75,19 @@
 
 
       </div>
-    <%}%>
+  
     </div>
   </a>
-
+  
   <% }) %>
+
 </div>
+<%} else {%>
+  <div class="vide-box-cont center">
+  <div class="vide-box center">
+    <div class="search-icon"></div>
+    <h3>Ups!... no results found</h3>
+  <p>Please try another search</p>
+  </div>
+</div>
+  <% }%>

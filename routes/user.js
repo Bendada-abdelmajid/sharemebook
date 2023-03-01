@@ -16,13 +16,16 @@ router.get("/:username", async (req, res) => {
  
   const user = await User.find({username:req.params.username}).exec();
 
-
+if(user[0]){
   if (id == user[0]._id) {
     isautincat = true;
 
   }
-  console.log(isautincat)
+
   userbooks = await Book.find({user:user[0].id}).populate('user').exec();
+}
+ 
+
   res.render("acount.ejs", {
     ues:user[0],
     userbooks: userbooks,

@@ -17,11 +17,20 @@
 </nav>
 
 <section id="myBooks">
-    
+  <%if(books.length >0 ) {%>
     <div class="grid">
       <% books.forEach((book) => {%>
         <%- include('./components/MyBook.ejs', {book: book});%>
       <% }) %>
     </div>
+    <%} else {%>
+      <div class="vide-box-cont center">
+      <div class="vide-box center">
+        <div class="search-icon"></div>
+        <h3>Ups!... no results found</h3>
+      <p>Please try another search</p>
+      </div>
+    </div>
+      <% }%>
 </section>
 <script src="/js/edit~delete.js"></script>

@@ -1,6 +1,6 @@
 
   <div class="random-acount">
-
+    <% if(ues){%>
     <nav class="space-b">
       <div class="child" style="padding: 5px 15px 5px 5px ;">
         <div class="user f-start">
@@ -63,6 +63,15 @@
       <% }%>
       <% }) %>
     </div>
+    <%} else {%>
+      <div class="vide-box-cont center">
+      <div class="vide-box center">
+        <span class="user-loader"></span>
+        <h3>Ups!... no user with this name</h3>
+      <a href="/users">back to users</p>
+      </div>
+    </div>
+      <% }%>
   </div>
   <%if(isautincat){%>
     <%- include('./components/DeleteBox.ejs');%>

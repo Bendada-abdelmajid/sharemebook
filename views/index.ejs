@@ -67,18 +67,26 @@
 </nav>
 
 <div class="grid">
-
+  <%if(books.length >0 ) {%>
       <% books.forEach((book) => {%>
         <%- include('./components/Book.ejs', {book: book});%>
       <% }) %>
-   
+      <%} else {%>
+        <div class="vide-box-cont center">
+        <div class="vide-box center">
+          <div class="search-icon"></div>
+          <h3>Ups!... no results found</h3>
+        <p>Please try another search</p>
+        </div>
+      </div>
+        <% }%>
 </div>
 
 <script>
   const dropDowns= document.querySelectorAll('.drop-down');
   dropDowns.forEach(el => { 
     el.addEventListener('click', (e) => {
-      el.classList.add('show')
+      el.classList.toggle('show')
     })
     el.querySelector('.list').addEventListener('mouseleave', (e) => {
       el.classList.remove('show')
