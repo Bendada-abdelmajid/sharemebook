@@ -7,26 +7,28 @@ const bcrypt = require("bcrypt");
 const multerConfig = require("./multer");
 const cloud = require('./cloudinaryConfig')
 const cloudinary = require('cloudinary')
-router.get("/:id", async (req, res) => {
+router.get("/:username", async (req, res) => {
   const id = req.session.isAuth || false;
-  let user = [];
-  let userbooks = [];
-  let userImage = "";
-  let isautincat = false;
-  if (id == req.params.id) {
-    isautincat = true;
-  } else {
-    user = await User.findById(req.params.id).populate('books');
-    userImage = await user.userImage ? `<img src="${await user.userImage}"/>` : '<i class="fa fa-user"></i>';
 
-    userbooks = await user.books;
+  let userbooks = [];
+
+  let isautincat = false;
+ 
+  const user = await User.find({username:req.params.username}).exec();
+
+
+  if (id == user[0]._id) {
+    isautincat = true;
+
   }
-  res.send({
-    username: user.username,
-    userImage: userImage,
+  
+  userbooks = await Book.find({user:user[0].id}).populate('user').exec();
+  res.render("acount.ejs", {
+    ues:user[0],
     userbooks: userbooks,
     isautincat: isautincat,
   });
+  
 });
 // Create Author Route
 router.post("/sing-up", async (req, res) => {
@@ -96,7 +98,7 @@ router.post("/logout", async (req, res) => {
 router.put("/edit/:id", multerConfig.single("userImage"), async (req, res) => {
   const data = {};
 
-  const { username, email, userImage } = req.body;
+  const { username, email, userImage, facebook,instagrame, twitter  } = req.body;
   const checkUser = await User.findOne({ email });
 
   if (checkUser && checkUser.email != email) {
@@ -109,13 +111,16 @@ router.put("/edit/:id", multerConfig.single("userImage"), async (req, res) => {
 
       user.username = username;
       user.email = email;
+      user.facebook = facebook;
+      user.instagrame = instagrame;
+      user.twitter = twitter;
 
       if (userImage !== "undefined" && userImage !== "") {
         if(user.userImage) {
           await cloudinary.uploader.destroy(user.cloud_id)
         }
           const result = await cloud.uploads(req.file.path)
-          console.log(result)
+          
           user.userImage= result.url
         user.cloud_id=result.id
       }
@@ -124,7 +129,7 @@ router.put("/edit/:id", multerConfig.single("userImage"), async (req, res) => {
       data.type = "success";
       data.user = user;
     } catch (error) {
-      console.log(error)
+      
       data.alert = `<i class="fa fa-exclamation-triangle"></i> somting Wrong plees try again`;
       data.type = "error";
     }
@@ -177,11 +182,11 @@ router.post("/save/:id", async (req, res) => {
       if (user.saved.includes(book._id)) {
         user.saved.pop(book._id);
         await user.save();
-        data.save = "far";
+        data.save = false;
       } else {
         user.saved.push(book._id);
         await user.save();
-        data.save = "fa";
+        data.save = true;
       }
       data.type = "success";
     } catch (error) {
@@ -193,9 +198,5 @@ router.post("/save/:id", async (req, res) => {
   }
   res.json({ responce: data });
 });
-router.post("/search", async (req, res) => {
-  const terms = req.body.q.trim();
-  let search = await User.find({ username: { $regex: new RegExp(terms, "i") } })
-  res.send({ search: search });
-});
+
 module.exports = router;

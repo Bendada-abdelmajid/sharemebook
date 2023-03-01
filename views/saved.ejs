@@ -1,33 +1,18 @@
-<div class="page-head">
-  <h2>Saved</h2>
-</div>
+<nav class="space-b">
+  <div class="child" >
+    <h4>Saved</h4>
+    
+  </div>
+  
+  <button class="resete-btn center hover active"    title="back" style="font-size: 30px; padding: 5px;" onclick="history.back()">
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M112 160l-64 64 64 64"></path><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M64 224h294c58.76 0 106 49.33 106 108v20"></path></svg>
+  </button>
+</nav>
 <section id="myBooks">
  
   <div class="grid">
     <% books.forEach((book) => {%>
-    <div class="book-box" data-book-id="<%= book.id %>">
-     
-        <div class="book-head flex-e">
-          <form class="saveBook" action="/user/save/<%= book.id %>" method="post">
-            <button type="submit">
-              <% if(user.saved.includes(book._id)){ %>
-              <i class="fa fa-bookmark"></i>
-              <% } else { %>
-              <i class="far fa-bookmark"></i>
-              <% } %>
-            </button>
-          </form>
-        </div>
-      
-      <div class="book-cover">
-        <i class="fa fa-expand book-i"></i>
-        <img src="<%= book.coverImage %>" />
-      </div>
-      <div class="content">
-        <h3><%= book.title %></h3>
-        <p><%= book.auther %></p>
-      </div>
-    </div>
+      <%- include('./components/Book.ejs', {book: book});%>
     <% }) %>
   </div>
 </section>

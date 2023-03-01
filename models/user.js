@@ -31,7 +31,19 @@ const userSchema = new mongoose.Schema({
   saved: [{
   type: mongoose.Schema.Types.ObjectId,
   ref: 'Book'
-}]
+}],
+facebook: {
+  type: String,
+
+},
+instagrame: {
+  type: String,
+
+},
+twitter: {
+  type: String,
+
+},
  
 })
 userSchema.methods.countBooks = function() {

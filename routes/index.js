@@ -5,54 +5,54 @@ const Book = require("../models/book");
 const Genre = require("../models/genre");
 
 router.get("/", async (req, res) => {
-  const users = await User.find({});
-  let Topusers=[]
-  for(let us of users){
-  Topusers.push({id:us._id,username:us.username, usimage: us.userImage, userBooks:us.books.length})
-  }
-  Topusers=  Topusers.sort((a,b)=>parseFloat(b.userBooks) - parseFloat(a.userBooks)).slice(0,7)
-  const newBooks = await Book.find()
-    .sort({ createdAt: "desc" })
-    .limit(12)
-    .populate("user")
-    .exec();
-  res.render("index.ejs", {
-    newBooks,
-    Topusers,
-  });
-});
+  
 
-router.get("/explore", async (req, res) => {
   const allBooks= await Book.find({}).populate("user").populate("genre").exec();
   let books =[]
-
+  let q= null;
+  let genre=null;
+  let auther= null;
   const unique = [...new Set(allBooks.map((item) => item.genre))];
+  const authers = [...new Set(allBooks.map((item) => item.auther))];
   if(req.query.q) {
-    
-    const terms = req.query.q;
-    
-     books = await Book.find({ title: { $regex: new RegExp('^'+terms+'-*', "i")}})
-      .populate("user")
-      .exec();
+    q=req.query.q
+  const terms = req.query.q;
+  books = await Book.find({ title: { $regex: new RegExp('^'+terms+'-*', "i")}})
+  .populate("user")
+  .exec();
       
-  } else if(req.query.g && req.query.g !== "all") {
+  } else if(req.query.genre) {
+    genre= req.query.genre;
     
-    const genre = await Genre.find({title:req.query.g})
-  
-    books = await Book.find({genre:genre})
+    const g = await Genre.find({title:req.query.genre})
+    
+    books = await Book.find({genre:g})
     .populate("user")
     .exec();
  
+  } else if(req.query.auther) {
+    auther= req.query.auther;
+    
+    books = await Book.find({auther:req.query.auther})
+    .populate("user")
+    .exec();
   } else {
     books=allBooks
+    q= null;
+ genre=null;
+  auther= null;
   }
-   
-  
-  res.render("explore.ejs", {
+
+  res.render("index.ejs", {
     genres: unique,
     books: books,
+    authers,
+    q,genre, auther
   });
-})
+ 
+});
+
+
 
 router.get("/settings", async (req, res) => {
   const id = req.session.isAuth || false;
@@ -64,7 +64,7 @@ router.get("/settings", async (req, res) => {
     user: user,
   });
 })
-router.get("/myBooks", async (req, res) => {
+router.get("/my-books", async (req, res) => {
   const id = req.session.isAuth || false;
 
   let books=[]
@@ -82,17 +82,45 @@ router.get("/myBooks", async (req, res) => {
     books: books,
   });
 })
+
 router.get("/saved", async (req, res) => {
   const id = req.session.isAuth || false;
   let user = false;
+  let books=[]
   if (id) {
-    user = await User.findById(id).populate("saved").exec();
+    user = await User.findById(id);
+    for(let b of user.saved){
+      const book = await Book.findById(b).populate("user").exec();
+      books.push(book)
+
+    }
   }
   
   res.render("saved.ejs", {
-    books: user.saved,
+    books: books,
    
   });
 })
+router.get("/users", async (req, res) => {
 
+
+  let users=[]
+  let q=null;
+  
+
+    if(req.query.q) {
+      const terms = req.query.q.trim();
+
+      q=req.query.q;
+      users = await User.find({ username: { $regex: new RegExp(terms, "i") } }).exec()
+      
+    } else {
+      users= await User.find({})
+    }
+  
+  res.render("users.ejs", {
+    users: users,
+    q:q,
+  });
+})
 module.exports = router;

@@ -1,7 +1,7 @@
 <div class="book-detail-cont popup center">
   <div class="book-d-cont">
-    
-    <div class="back center" onclick="closeBookPopup()"> <i class="fa fa-times"> </i></div>
+
+    <div class="back center" onclick="closeBookPopup()">  <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg></div>
     <div class="book-detail"></div>
     <% if(user){ %>
       <div id="addreview-cont">
@@ -15,12 +15,13 @@
             </g>
           </svg>
         </div>
-        <div id="addreview-formcont">
-          <form id="review-form" class="center">
+        
+      
+          <form id="review-form" class="space-b">
             <textarea name="reviewText" id="id_review" cols="30" rows="2"></textarea>
-            <button type="submit"><i class="fa fa-paper-plane"></i></button>
+            <button type="submit"><svg stroke="currentColor" fill="currentColor" stroke-width="0" t="1569683742680" viewBox="0 0 1024 1024" version="1.1" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><defs></defs><path d="M931.4 498.9L94.9 79.5c-3.4-1.7-7.3-2.1-11-1.2-8.5 2.1-13.8 10.7-11.7 19.3l86.2 352.2c1.3 5.3 5.2 9.6 10.4 11.3l147.7 50.7-147.6 50.7c-5.2 1.8-9.1 6-10.3 11.3L72.2 926.5c-0.9 3.7-0.5 7.6 1.2 10.9 3.9 7.9 13.5 11.1 21.5 7.2l836.5-417c3.1-1.5 5.6-4.1 7.2-7.1 3.9-8 0.7-17.6-7.2-21.6zM170.8 826.3l50.3-205.6 295.2-101.3c2.3-0.8 4.2-2.6 5-5 1.4-4.2-0.8-8.7-5-10.2L221.1 403 171 198.2l628 314.9-628.2 313.2z"></path></svg></button>
           </form>
-        </div>
+       
       </div>
       <% } %>
   </div>
@@ -36,12 +37,12 @@
 const addreviewBtn = document.getElementById('addreview-btn'),
 addreviewCont =document.getElementById('addreview-cont');
 addreviewBtn.addEventListener('click', (e) => {
-  if(addreviewBtn.querySelector('i')) {
+  if(addreviewBtn.querySelector('svg.times')) {
     addreviewCont.classList.remove('show')
     addreviewBtn.innerHTML= `<svg viewBox="0 0 24 24" aria-hidden="true" class="r-jwli3a r-4qtqp9 r-yyyyoo r-1472mwg r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-lrsllp"><g><path d="M8.8 7.2H5.6V3.9c0-.4-.3-.8-.8-.8s-.7.4-.7.8v3.3H.8c-.4 0-.8.3-.8.8s.3.8.8.8h3.3v3.3c0 .4.3.8.8.8s.8-.3.8-.8V8.7H9c.4 0 .8-.3.8-.8s-.5-.7-1-.7zm15-4.9v-.1h-.1c-.1 0-9.2 1.2-14.4 11.7-3.8 7.6-3.6 9.9-3.3 9.9.3.1 3.4-6.5 6.7-9.2 5.2-1.1 6.6-3.6 6.6-3.6s-1.5.2-2.1.2c-.8 0-1.4-.2-1.7-.3 1.3-1.2 2.4-1.5 3.5-1.7.9-.2 1.8-.4 3-1.2 2.2-1.6 1.9-5.5 1.8-5.7z"></path></g></svg>`
   } else {
     addreviewCont.classList.add('show')
-    addreviewBtn.innerHTML= `<i class="fa fa-times"></i>`
+    addreviewBtn.innerHTML= ` <svg class="times" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>`
   }
 })
   $(document).ready(function () {
@@ -58,19 +59,24 @@ addreviewBtn.addEventListener('click', (e) => {
           
           if (type == "success") {
             const reviewDiv= document.createElement('div')
-            reviewDiv.innerHTML= `<div id="share">
-            <div class="center">
-                <div class="s-img center">
-                <i class="fa fa-user"></i>
-              </div>
-              <div>
-                <h5>${review.user.username}</h5>
-                <p class="s-p">Posting</p>
-              </div>
-            </div>
-            <div id="description">${review.review}</div>
-        
-        </div>`
+            reviewDiv.innerHTML= `
+            <div class="review f-start">
+      
+      <div class="s-img center">
+        <% if(user.userImage){ %>
+          <img src="<%= user.userImage %>" alt="">
+          <% } else { %>
+            <svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"></path></svg>
+          <% } %>
+      </div>
+      <div>
+        <h4>${review.user.username}</h4>
+        <p> ${review.review}</p>
+        <p class="s-p"> Posting</p>
+      </div>
+    
+   
+  </div>`
           document.getElementById('reviews').appendChild(reviewDiv)
           addreviewCont.classList.remove('show')
           addreviewBtn.innerHTML= `<svg viewBox="0 0 24 24" aria-hidden="true" class="r-jwli3a r-4qtqp9 r-yyyyoo r-1472mwg r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-lrsllp"><g><path d="M8.8 7.2H5.6V3.9c0-.4-.3-.8-.8-.8s-.7.4-.7.8v3.3H.8c-.4 0-.8.3-.8.8s.3.8.8.8h3.3v3.3c0 .4.3.8.8.8s.8-.3.8-.8V8.7H9c.4 0 .8-.3.8-.8s-.5-.7-1-.7zm15-4.9v-.1h-.1c-.1 0-9.2 1.2-14.4 11.7-3.8 7.6-3.6 9.9-3.3 9.9.3.1 3.4-6.5 6.7-9.2 5.2-1.1 6.6-3.6 6.6-3.6s-1.5.2-2.1.2c-.8 0-1.4-.2-1.7-.3 1.3-1.2 2.4-1.5 3.5-1.7.9-.2 1.8-.4 3-1.2 2.2-1.6 1.9-5.5 1.8-5.7z"></path></g></svg>`

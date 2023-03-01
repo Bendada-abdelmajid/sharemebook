@@ -28,12 +28,12 @@ router.post("/new", multerConfig.single("coverImage"), async (req, res) => {
     user = await User.findById(id);
 
     const result = await cloud.uploads(req.file.path)
-    console.log(result)
+    
     const book = await new Book({
       title,
       auther,
       description,
-      genre,
+     genre,
       coverImage: result.url,
       cloud_id:result.id,
       user: user,
@@ -49,7 +49,7 @@ router.post("/new", multerConfig.single("coverImage"), async (req, res) => {
       // delete image local
       fs.unlinkSync(req.file.path)
     } catch (error) {
-      console.log(error)
+      
       data.alert = `<i class="fa fa-exclamation-triangle"></i> somting Wrong plees try again" `;
       data.type = "error";
     }
@@ -81,7 +81,7 @@ router.put("/edit/:id", multerConfig.single("coverImage"), async (req, res) => {
     data.type = "success";
     data.book = book;
   } catch (error) {
-    console.log(error)
+    
     data.alert = `<i class="fa fa-exclamation-triangle"></i> somting Wrong plees try again" `;
     data.type = "error";
   }

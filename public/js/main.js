@@ -1,5 +1,18 @@
 const lodear = document.getElementById("loade-animation");
-const bodyCont = document.querySelector(".body-container");
+
+function  showSittings(){
+    document.querySelector(".body-cont").classList.add("show-rightSide")
+  
+
+    document.querySelector(".mini-menu").classList.add("move")
+  
+}
+function  hideSittings(){
+  document.querySelector(".body-cont").classList.remove("show-rightSide")
+ 
+    document.querySelector(".mini-menu").classList.remove("move")
+  
+}
 function refrech (){
   document.location.reload();
 }
@@ -53,46 +66,6 @@ function flipcard(n) {
   iinerCard.style = `transform: rotateY(${180 * n}deg );`;
 }
 
-function showRegisterSide(e, a="login") {
- 
-    if(a=== "users") {
-      if(bodyCont.classList.contains("show-login")){
-        bodyCont.classList.remove("show-rightSide", "show-login");
-        bodyCont.classList.add("show-rightSide", "show-users")
-       
-      }
-      else if(bodyCont.classList.contains("show-users")) {
-       
-        bodyCont.classList.remove("show-rightSide", "show-users")
-      } else {
-        bodyCont.classList.add("show-rightSide", "show-users");
-      }
-      
-    } else {
-      if(bodyCont.classList.contains("show-users")){
-        bodyCont.classList.remove("show-rightSide", "show-users")
-        bodyCont.classList.add("show-rightSide", "show-login");
-      }
-      else if(bodyCont.classList.contains("show-login")) {
-       
-        bodyCont.classList.remove("show-rightSide", "show-logi")
-      } else {
-        bodyCont.classList.add("show-rightSide", "show-login");
-      }
-    }
-  
-  
-   
-  
-  
-  
-
-}
-
-function hideRegisterSide(e) {
-  bodyCont.classList.remove("show-rightSide", "show-users", "show-login");
-
-}
 function seepassWord(e) {
   const input= e.parentElement.querySelector('input')
   
@@ -112,7 +85,6 @@ function seepassWord(e) {
 function clickBook() {
 
   const booksBox = [...document.querySelectorAll(".book-box")];
-
   booksBox.forEach((el) => {
     el.addEventListener("click", (e) => {
       
@@ -120,11 +92,7 @@ function clickBook() {
         createBookPopup(el.dataset.bookId);
         document.querySelector(".book-detail-cont").classList.add("show");
       }
-      if (e.target.classList.contains('info')) {
-        const userId = e.target.dataset.userId
-        
-        showRandomAcount(userId);
-      }
+     
     });
   });
 }
@@ -147,7 +115,7 @@ async function createBookPopup(id) {
   const book = await data.book;
 
   const reviews = await data.reviews;
-  
+  const userImg= book.user.userImage ? `<img src=${book.user.userImage}/>`: `  <svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"></path></svg>`
   document.querySelector(".book-detail").innerHTML = `
    
     <div class="fl">
@@ -155,16 +123,18 @@ async function createBookPopup(id) {
       <div class="book-cover">
       <img src="${book.coverImage}" alt="">
     </div>
+    <div style="padding-left:15px;">
     <h3 id="genre-1" class="genre"> <span> Genre :</span>${book.genre.title}</h3>
+    <h4 class="review-cont">${reviews.length} reviews</h4>
+    </div>
 
     </div>
     <div class="book-info">
         
         <div>
         <h1 id="title"> ${book.title}</h1>
-        <h3 id="auther"> 
-        <span class="h l"></span>
-        <span class="h r"></span>
+        <h3 id="auther" class="f-start"> 
+        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><desc></desc><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 19c3.333 -2 5 -4 5 -6c0 -3 -1 -3 -2 -3s-2.032 1.085 -2 3c.034 2.048 1.658 2.877 2.5 4c1.5 2 2.5 2.5 3.5 1c.667 -1 1.167 -1.833 1.5 -2.5c1 2.333 2.333 3.5 4 3.5h2.5"></path><path d="M20 17v-12c0 -1.121 -.879 -2 -2 -2s-2 .879 -2 2v12l2 2l2 -2z"></path><path d="M16 7h4"></path></svg>
        BY  ${book.auther}
         </h3>
         </div>
@@ -174,7 +144,7 @@ async function createBookPopup(id) {
     <div id="share">
             <div class="center">
                 <div class="s-img center">
-                <i class="fa fa-user"></i>
+                ${userImg}
               </div>
               <div>
                 <h5>${book.user.username}</h5>
@@ -182,37 +152,35 @@ async function createBookPopup(id) {
               </div>
             </div>
             <div id="description">
-        <div class="cube tl"></div>
-        <div class="cube br"></div>
+        
        
         ${book.description}
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci, nobis! Laboriosam consectetur, sit tenetur magnam aperiam itaque blanditiis nostrum similique ducimus ipsa, dolore sequi perferendis fugiat id rerum repellendus tempore.
         </div>
             
-        </div>
-        
-    </div>
-    <div class="review">
-      <h1> <span> review </span></h1>
+      </div>
+      <div class="review-cont">
+      <h1> <span>${reviews.length} </span>review </h1>
       <div id="reviews">
       </div>
     </div>
+    </div>
+    
     `;
   reviews.forEach((el) => {
     document.getElementById("reviews").innerHTML += `
-    <div id="share">
-      <div class="center">
+    <div class="review f-start">
+      
         <div class="s-img center">
-        <i class="fa fa-user"></i>
+        ${userImg}
         </div>
         <div>
-          <h5>${el.user.username}</h5>
+          <h4>${el.user.username}</h4>
+          <p> ${el.review}</p>
           <p class="s-p"> ${el.createdAt}</p>
         </div>
-      </div>
-      <div id="description">
-        ${el.review}
-      </div>
+      
+     
     </div>
     `;
   });
@@ -227,72 +195,29 @@ function closeBookPopup() {
 
 
 
-
-
-
-
-
-
-
-// show random acount 
-const randomAcountCont = document.querySelector('.random-acount-cont')
-async function showRandomAcount(id) {
-  try {
-    let res = await fetch("/user/" + id);
-    let data = await res.json();
-    let isAuth = await data.isautincat
-    if (isAuth) {
-      showAcount()
-    } else {
-      
-      const randomAcount = document.querySelector('.random-acount')
-      const username = await data.username
-      const userImage = await data.userImage
-      const userBooks = await data.userbooks
-      randomAcount.querySelector('.user').innerHTML = `
-      <div class="user-img center">${userImage}</div>
-      <div>
-        <h2 >${username}</h2>
-        <div class="book-count">
-            <i class="fa fa-book"></i>${userBooks.length} 
-      </div>
-      </div>`
-      randomAcount.querySelector('.grid').innerHTML = ''
-      for (let book of userBooks) {
-        randomAcount.querySelector('.grid').innerHTML += `
-        
-        <div class="book-box" data-book-id="${book._id}">
-        <div class="book-cover">
-         <i class="fa fa-expand book-i"></i>
-         <img src="${book.coverImage}" />
-       </div>
-       <div class="content">
-         <h3>${book.title}</h3>
-         <p>${book.auther}</p>
-       </div>
-        `
-      }
-      clickBook()
-
-      randomAcountCont.classList.add("show")
-      
+function activeLink(){
+  const ids=["users", "my-books", "saved"]
+  const link = document.location.pathname
+   for (let i of ids){
+    if(link.includes(i)){
+      document.getElementById(i).classList.add('active')
     }
-
-  } catch (error) {
-    
   }
-
-
+  if(link==="/") {
+    document.getElementById("home").classList.add('active')
+  }
 }
-document.getElementById('closeAcount').addEventListener('click', () => {
-  randomAcountCont.classList.remove("show")
+
+window.addEventListener("load", () => { 
+  activeLink()
 })
 
-function activeLink() {
-  const id = document.location.pathname
-  document.getElementById(id).classList.add('active')
-}
-window.addEventListener('load', () => { 
-  activeLink()
-  
+
+const linksBtn= document.getElementById('links-btn')
+linksBtn.addEventListener("click", () => { 
+  document.querySelector("header").classList.toggle('show-nav')
  })
+
+
+
+

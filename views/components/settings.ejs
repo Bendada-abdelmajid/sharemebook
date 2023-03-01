@@ -1,0 +1,87 @@
+<div class="settings">
+  <div class="f-start head">
+    <div class="close center hover active" onclick="hideSittings()">
+      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+    </div>
+    <h3>Settings</h3>
+  </div>
+  
+  <section >
+    <div class="form">
+      <h4>Profile</h4>
+      <form method="POST" id="profileForm" action="/user/edit/<%= user.id %>?_method=PUT" enctype="multipart/form-data" >
+        
+        <div class="center" style="gap:20px">
+          <div class="image-box form-control center" >
+            <div id="Image"  onclick="clickCover(this)" class="image-cont image-previw">
+              <% if(user.userImage){ %>
+                <img src="<%= user.userImage %>" alt="">
+              <% } else { %>
+              <i class="fa fa-user"></i>
+              <% } %>
+         
+            </div>
+            <input  type="file" accept="image/*" name="userImage" class="input" placeholder="user image" onchange="changeCover(this)"  id="id_userImage"  style="display: none;"/>
+          </div>
+          <div style="width: 100%;">
+            <div class="form-control">
+              <label for="id_username"> username :</label>
+              <input type="text" name="username" autofocus="" value="<%= user.username %>" autocomplete="off" maxlength="150" 
+                id="id_username" />
+            </div>
+            <div class="form-control">
+              <label for="id_email"> email :</label>
+              <input type="email" name="email" autofocus="" value="<%= user.email %>" autocomplete="off" maxlength="150" 
+                id="id_email" />
+            </div>
+          </div>
+          
+          
+        </div>
+        <div class="form-control">
+          <label for="id_facebook"> facebook :</label>
+          <input type="text" name="facebook" autofocus="" value="<%= user.facebook %>" autocomplete="off" maxlength="150" 
+            id="id_facebook" />
+        </div>
+        <div class="form-control">
+          <label for="id_instgrame"> instagrame :</label>
+          <input type="text" name="instagrame" autofocus="" value="<%= user.instagrame %>" autocomplete="off" maxlength="150" 
+            id="id_instgrame" />
+        </div>
+        <div class="form-control">
+          <label for="id_twitter"> twitter :</label>
+          <input type="text" name="twitter" autofocus="" value="<%= user.twitter %>" autocomplete="off" maxlength="150" 
+            id="id_twitter" />
+        </div>
+        
+       
+        <button type="submit" class="btn B">save</button>
+      </form>
+     </div>
+  <div class="form">
+    <h4>Change Password</h4>
+    <form method="POST" id="passwordForm" action="/user/change-password/<%= user.id %>?_method=PUT" enctype="multipart/form-data" >
+      
+      <div class="form-control">
+        <label for="id_old-password "> Old password :</label>
+        <input type="password" name="oldPassword" autofocus="" autocomplete="off" maxlength="150" required=""
+          id="id_old-password" />
+      </div>
+      <div class="form-control">
+        <label for="id_new-password "> New password :</label>
+        <input type="password" name="newPassword" autofocus="" autocomplete="off" maxlength="150" required=""
+          id="id_new-password" />
+      </div>
+      <div class="form-control">
+        <label for="id_confirm-password "> confirm password :</label>
+        <input type="password" name="confirmPassword" autofocus="" autocomplete="off" maxlength="150" required=""
+          id="id_confirm-password" />
+      </div>
+      <button type="submit" class="btn B">save</button>
+    </form>
+    
+   </div>
+  </section>
+  
+
+</div>

@@ -1,5 +1,14 @@
 
+const miniMenu = document.querySelector(".mini-menu");
 
+const navBtn= document.getElementById('nav-btn')
+navBtn.addEventListener("click", () => { 
+  if(miniMenu.classList.contains('open')) {
+    miniMenu.classList.remove("open")
+  } else {
+    miniMenu.classList.add("open")
+  }
+ })
 $(document).on("submit", "#profileForm", function (e) {
   e.preventDefault();
   lodear.classList.add("show");
@@ -8,6 +17,9 @@ $(document).on("submit", "#profileForm", function (e) {
 
   Data.append("username", $("#id_username").val());
   Data.append("email", $("#id_email").val());
+  Data.append("facebook", $("#id_facebook").val());
+  Data.append("instagrame", $("#id_instgrame").val());
+  Data.append("twitter", $("#id_twitter").val());
   const img = $("#id_userImage")[0].files[0];
   
 
@@ -121,7 +133,6 @@ const shareBookForm =document.getElementById('shareBookForm')
 const closeShareBookForm =document.getElementById('closeShareBookForm')
 shareBtn.addEventListener('click', ()=> {
   shareBookForm.classList.add('show')
-
 })
 closeShareBookForm.addEventListener('click', (e)=> {
   shareBookForm.classList.remove('show')
